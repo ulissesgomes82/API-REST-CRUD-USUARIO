@@ -22,6 +22,7 @@ import com.ulisses.myapi.service.UsuarioService;
 @RequestMapping(value = "/usuarios")
 public class UsuarioResource {
 
+	private static final String ID = "/{id}";
 	@Autowired
 	UsuarioService service;
 
@@ -30,7 +31,7 @@ public class UsuarioResource {
 		return ResponseEntity.ok(service.findAll());
 	}
 
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = ID)
 	public ResponseEntity<Usuario> findById(@PathVariable Long id) {
 		return ResponseEntity.ok(service.FindById(id));
 	}
@@ -38,16 +39,16 @@ public class UsuarioResource {
 	@PostMapping
 	public ResponseEntity<Usuario> create(@RequestBody Usuario usuario){
 		Usuario obj = service.create(usuario);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path(ID).buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 
-	@PutMapping(value = "/{id}")
+	@PutMapping(value = ID)
 	public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
 		return ResponseEntity.ok(service.update(id, usuario));
 	}
 
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping(value = ID)
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();

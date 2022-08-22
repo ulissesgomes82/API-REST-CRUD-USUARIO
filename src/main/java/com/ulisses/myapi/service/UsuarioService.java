@@ -40,6 +40,7 @@ public class UsuarioService {
 	}
 
 	public void delete(Long id) {
+		FindById(id);
 		usuarioRepository.deleteById(id);
 	}
 
